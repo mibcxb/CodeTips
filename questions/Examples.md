@@ -338,3 +338,67 @@ public class Solution {
 }
 ```
 
+#11、 最大公约数和最小公倍数
+
+```java
+    /**
+     * 计算两个数的最大公约数 - 递归版本
+     * @param a 第一个数
+     * @param b 第二个数  
+     * @return 最大公约数
+     */
+    public static long gcd(long a, long b) {
+        // 处理负数
+        a = Math.abs(a);
+        b = Math.abs(b);
+        // 基础情况
+        if (b == 0) return a;
+        // 递归调用
+        return gcd(b, a % b);
+    }
+    
+    /**
+     * 计算两个数的最大公约数 - 迭代版本
+     * @param a 第一个数
+     * @param b 第二个数
+     * @return 最大公约数
+     */
+    public static long gcdIterative(long a, long b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b != 0) {
+            long temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    /**
+     * 计算两个数的最小公倍数
+     * @param a 第一个数
+     * @param b 第二个数
+     * @return 最小公倍数
+     */
+    public static long lcm(long a, long b) {
+        if (a == 0 || b == 0) return 0;
+        
+        // LCM(a,b) = |a*b| / GCD(a,b)
+        return Math.abs(a * b) / gcd(a, b);
+    }
+    
+    /**
+     * 安全的LCM计算，避免溢出
+     */
+    public static long lcmSafe(long a, long b) {
+        if (a == 0 || b == 0) return 0;
+        
+        a = Math.abs(a);
+        b = Math.abs(b);
+        
+        long gcdValue = gcd(a, b);
+        
+        // 先除后乘，避免溢出
+        return (a / gcdValue) * b;
+    }
+```
