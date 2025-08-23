@@ -153,7 +153,7 @@
 
 ```
 
-## 6、 匹配子字符串（KMP算法）
+## 6、 匹配子字符串（KMP 算法）
 
 ```java
     public static int kmpCount(String string, String subStr) {
@@ -243,9 +243,9 @@ public class Solution2 {
 
 ## 8、 贪心算法（主持人调度）
 
-*   首先建立两个数组分别存储开始时间（记为start）和结束时间（记为end）。
-*   然后分别对start和end数组进行排序。
-*   接着遍历start数组，判断当前开始时间是否大于等于最小的结束时间，如果是，则说明当前主持人就可以搞定（对应当前最小的结束时间的那个活动）；如果否，则需要新增一个主持人，并将end数组下标后移（表示对应的活动已经有人主持）。
+- 首先建立两个数组分别存储开始时间（记为 start）和结束时间（记为 end）。
+- 然后分别对 start 和 end 数组进行排序。
+- 接着遍历 start 数组，判断当前开始时间是否大于等于最小的结束时间，如果是，则说明当前主持人就可以搞定（对应当前最小的结束时间的那个活动）；如果否，则需要新增一个主持人，并将 end 数组下标后移（表示对应的活动已经有人主持）。
 
 ```java
     public class Solution {
@@ -275,8 +275,8 @@ public class Solution2 {
 
 ## 9、 递归（括号生成）
 
-给出n对括号，请编写一个函数来生成所有的由n对括号组成的合法组合。\
-例如，给出n=3，解集为："((()))", "(()())", "(())()", "()()()", "()(())"
+给出 n 对括号，请编写一个函数来生成所有的由 n 对括号组成的合法组合。\
+例如，给出 n=3，解集为："((()))", "(()())", "(())()", "()()()", "()(())"
 
 ```java
 public class Solution {
@@ -303,13 +303,13 @@ public class Solution {
 
 ## 10、 兑换零钱
 
-给定数组arr，arr中所有的值都为正整数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个aim，代表要找的钱数，求组成aim的最少货币数。如果无解，请返回-1。
+给定数组 arr，arr 中所有的值都为正整数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个 aim，代表要找的钱数，求组成 aim 的最少货币数。如果无解，请返回-1。
 
-*   step 1：可以用dp\[i]*dp*\[*i*]表示要凑出i元钱需要最小的货币数。
-*   step 2：一开始都设置为最大值aim+1*aim*+1，因此货币最小1元，即货币数不会超过aim*aim*.
-*   step 3：初始化dp\[0]=0*dp*\[0]=0。
-*   step 4：后续遍历1元到aim元，枚举每种面值的货币都可能组成的情况，取每次的最小值即可，转移方程为dp\[i]=min(dp\[i],dp\[i−arr\[j]]+1)*dp*\[*i*]=*min*(*dp*\[*i*],*dp*\[*i*−*arr*\[*j*]]+1).
-*   step 5：最后比较dp\[aim]*dp*\[*aim*]的值是否超过aim，如果超过说明无解，否则返回即可。
+- step 1：可以用 dp\[i]_dp_\[_i_]表示要凑出 i 元钱需要最小的货币数。
+- step 2：一开始都设置为最大值 aim+1*aim*+1，因此货币最小 1 元，即货币数不会超过 aim*aim*.
+- step 3：初始化 dp\[0]=0*dp*\[0]=0。
+- step 4：后续遍历 1 元到 aim 元，枚举每种面值的货币都可能组成的情况，取每次的最小值即可，转移方程为 dp\[i]=min(dp\[i],dp\[i−arr\[j]]+1)_dp_\[_i_]=_min_(_dp_\[_i_],_dp_\[*i*−*arr*\[_j_]]+1).
+- step 5：最后比较 dp\[aim]_dp_\[_aim_]的值是否超过 aim，如果超过说明无解，否则返回即可。
 
 ```java
 public class Solution {
@@ -344,7 +344,7 @@ public class Solution {
     /**
      * 计算两个数的最大公约数 - 递归版本
      * @param a 第一个数
-     * @param b 第二个数  
+     * @param b 第二个数
      * @return 最大公约数
      */
     public static long gcd(long a, long b) {
@@ -356,7 +356,7 @@ public class Solution {
         // 递归调用
         return gcd(b, a % b);
     }
-    
+
     /**
      * 计算两个数的最大公约数 - 迭代版本
      * @param a 第一个数
@@ -382,23 +382,78 @@ public class Solution {
      */
     public static long lcm(long a, long b) {
         if (a == 0 || b == 0) return 0;
-        
+
         // LCM(a,b) = |a*b| / GCD(a,b)
         return Math.abs(a * b) / gcd(a, b);
     }
-    
+
     /**
      * 安全的LCM计算，避免溢出
      */
     public static long lcmSafe(long a, long b) {
         if (a == 0 || b == 0) return 0;
-        
+
         a = Math.abs(a);
         b = Math.abs(b);
-        
+
         long gcdValue = gcd(a, b);
-        
+
         // 先除后乘，避免溢出
         return (a / gcdValue) * b;
+    }
+```
+
+## 12、 数字字符串连续递增或递减
+
+```java
+    /**
+     * 判断数字字符串是否单调（连续递增或连续递减）
+     *
+     * @param chars 纯数字组成的字符串（不能包含非数字字符）
+     * @return true-递增/递减；false-非单调或无效输入
+     */
+    public static boolean isConsecutive(char[] chars) {
+        int trend = 0; // 0:未定义, 1:递增, -1:递减
+        for (int i = 1; i < chars.length; i++) {
+            char prev = chars[i - 1];
+            char curr = chars[i];
+            if (prev == curr) { // 检查数字连续性
+                return false; // 相邻相等立即失败
+            }
+            if (trend == 0) { // 首次确定趋势
+                trend = (prev < curr) ? 1 : -1;
+            } else if ((trend == 1 && prev >= curr) || (trend == -1 && prev <= curr)) { // 校验趋势一致性
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判断数字字符串是否严格单调
+     *
+     * @param chars 纯数字组成的字符串（不能包含非数字字符）
+     * @return true-递增/递减；false-非单调或无效输入
+     */
+    public static boolean isConsecutiveStrictly(char[] chars) {
+        int trend = 0;
+        for (int i = 1; i < chars.length; i++) {
+            char prev = chars[i - 1];
+            char curr = chars[i];
+            if (prev == curr) {
+                return false;
+            }
+            if (trend == 0) {
+                trend = curr - prev;
+                if (Math.abs(trend) != 1) {
+                    return false;
+                }
+            } else {
+                if (curr - prev != trend) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 ```
